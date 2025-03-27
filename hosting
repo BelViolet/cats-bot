@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Trello Connector</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Trello client library -->
+    <script src="https://p.trellocdn.com/embed.min.js"></script>
+  </head>
+  <body>
+    <script>
+      // Initialize Trello client
+      Trello.authorize({
+        type: "popup",
+        name: "My Power-Up",
+        scope: { read: true, write: true },
+        expiration: "never",
+        success: function() {
+          // Get the token and close the popup
+          const token = Trello.token();
+          window.opener.postMessage({ token: token }, "*");
+          window.close();
+        },
+        error: function() {
+          console.error("Authorization failed");
+        },
+      });
+    </script>
+  </body>
+</html>
